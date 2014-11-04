@@ -21,7 +21,7 @@ int main(int argc, char * argv[])
     WindowConfig config = WindowConfig::plain;
     config.width = 1280;
     config.height = 800;
-    Engine::init(argc, argv, config);
+    Engine::init(argc, argv/*, config*/);
     auto scene = Engine::activeScene();
     auto camera = scene->createPerspectiveCamera();
 
@@ -31,7 +31,7 @@ int main(int argc, char * argv[])
     scene->createDirectionalLight();
     scene->createAmbientLight(0.5f, glm::vec3(1));
 
-    Plane* plane = scene->createGameObject("Plane")->addComponent<Plane>();
+    ThePlane* plane = scene->createGameObject("Plane")->addComponent<ThePlane>();
     scene->createGameObject("Plane")->addComponent<Terrain>();
     Plant* plant = scene->createGameObject("Plant")->addComponent<Plant>(PlantType::Plant);
 

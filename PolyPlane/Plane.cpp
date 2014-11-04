@@ -11,7 +11,7 @@ using namespace kick;
 using namespace glm;
 using namespace std;
 
-Plane::Plane(kick::GameObject *gameObject) : Component(gameObject) {
+ThePlane::ThePlane(kick::GameObject *gameObject) : Component(gameObject) {
     MeshRenderer* mr = gameObject->addComponent<MeshRenderer>();
     Material *material = new Material();
     material->setShader(Project::loadShader("shaders/diffuse_vertex_colored.shader"));
@@ -43,7 +43,7 @@ Plane::Plane(kick::GameObject *gameObject) : Component(gameObject) {
     }
 }
 
-void Plane::update() {
+void ThePlane::update() {
 
     static float exCount = 0;
     if (KeyInput::pressed(Key::SPACE)) {

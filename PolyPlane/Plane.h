@@ -10,7 +10,7 @@
 #include "Exhaustion.h"
 #include <vector>
 
-class Plane : public kick::Component, public kick::Updatable {
+class ThePlane : public kick::Component, public kick::Updatable {
     kick::Transform* propeller;
     float propellerSpeed = 0;
     float propellerRotation = 0;
@@ -20,7 +20,7 @@ class Plane : public kick::Component, public kick::Updatable {
     std::vector<Exhaustion*> particles;
     int currentParticle = 0;
 public:
-    Plane(kick::GameObject *gameObject);
+    ThePlane(kick::GameObject *gameObject);
 
     virtual void update();
 };
