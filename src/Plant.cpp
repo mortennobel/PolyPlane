@@ -12,7 +12,7 @@ using namespace std;
 Plant::Plant(kick::GameObject *gameObject, PlantType type) : Component(gameObject), type(type) {
     MeshRenderer* mr = gameObject->addComponent<MeshRenderer>();
     Material *material = new Material();
-    material->setShader(Project::loadShader("shaders/diffuse_vertex_colored.shader"));
+    material->setShader(Project::loadShader("poly-assets/shaders/diffuse_vertex_colored.shader"));
     mr->setMaterial(material);
     Mesh *mesh = new Mesh();
 
@@ -32,6 +32,6 @@ Plant::Plant(kick::GameObject *gameObject, PlantType type) : Component(gameObjec
             break;
 
     }
-    mesh->setMeshData(AddNoise(loadPlyData("blender-models",name+".ply")));
+    mesh->setMeshData(AddNoise(loadPlyData("poly-assets/models",name+".ply")));
     mr->setMesh(mesh);
 }

@@ -1,6 +1,6 @@
 {
-"vertexShaderURI":"shaders/skybox_vs.glsl",
-"fragmentShaderURI":"shaders/skybox_fs.glsl",
+"vertexShaderURI":"poly-assets/shaders/skybox_vs.glsl",
+"fragmentShaderURI":"poly-assets/shaders/skybox_fs.glsl",
 "faceCulling":0,
 "defaultUniform":
     {

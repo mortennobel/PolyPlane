@@ -14,20 +14,20 @@ using namespace std;
 ThePlane::ThePlane(kick::GameObject *gameObject) : Component(gameObject) {
     MeshRenderer* mr = gameObject->addComponent<MeshRenderer>();
     Material *material = new Material();
-    material->setShader(Project::loadShader("shaders/diffuse_vertex_colored.shader"));
+    material->setShader(Project::loadShader("poly-assets/shaders/diffuse_vertex_colored.shader"));
     mr->setMaterial(material);
     Mesh *mesh = new Mesh();
-    mesh->setMeshData(AddNoise(loadPlyData("blender-models","plane.ply")));
+    mesh->setMeshData(AddNoise(loadPlyData("poly-assets/models","plane.ply")));
     mr->setMesh(mesh);
 
     {
         auto propellerGO = Engine::activeScene()->createGameObject("Propeller");
         MeshRenderer* mr = propellerGO->addComponent<MeshRenderer>();
         Material *material = new Material();
-        material->setShader(Project::loadShader("shaders/diffuse_vertex_colored.shader"));
+        material->setShader(Project::loadShader("poly-assets/shaders/diffuse_vertex_colored.shader"));
         mr->setMaterial(material);
         Mesh *mesh = new Mesh();
-        mesh->setMeshData(AddNoise(loadPlyData("blender-models","plane-propeller.ply")));
+        mesh->setMeshData(AddNoise(loadPlyData("poly-assets/models","plane-propeller.ply")));
         mr->setMesh(mesh);
         propeller = propellerGO->transform();
         propeller->setParent(transform());
@@ -46,7 +46,8 @@ ThePlane::ThePlane(kick::GameObject *gameObject) : Component(gameObject) {
 void ThePlane::update() {
 
     static float exCount = 0;
-    if (KeyInput::pressed(Key::SPACE)) {
+    bool accelerate = KeyInput::pressed(Key::SPACE) || MouseInput::pressed(0);
+    if (accelerate) {
         exCount += Time::delta();
     }
     if (exCount>0.25f){
@@ -58,7 +59,7 @@ void ThePlane::update() {
         particles[currentParticle]->spawn(transform()->position());
     }
     auto trans = transform();
-    if (KeyInput::pressed(Key::SPACE)){
+    if (accelerate){
         float acc = 10;
         propellerSpeed += Time::delta()*acc;
         propellerSpeed = std::min(500.0f,propellerSpeed);
@@ -73,11 +74,16 @@ void ThePlane::update() {
     trans->setPosition(trans->position() + trans->forward()*propellerSpeed*speedFactor*Time::delta());
 
     float torqueAcc = 10;
-    if (KeyInput::pressed(Key::LEFT)){
-        torque.x += Time::delta()*torqueAcc;
-    }
-    if (KeyInput::pressed(Key::RIGHT)){
-        torque.x -= Time::delta()*torqueAcc;
+    if (MouseInput::pressed(0)){
+        float relative = (MouseInput::position().x / (float)Engine::context()->getContextSurfaceDim().x)*2-1;
+        torque.x -= relative*Time::delta()*torqueAcc;
+    } else {
+        if (KeyInput::pressed(Key::LEFT) || KeyInput::pressed(Key::LSHIFT) || KeyInput::pressed(Key::a)) {
+            torque.x += Time::delta() * torqueAcc;
+        }
+        if (KeyInput::pressed(Key::RIGHT) || KeyInput::pressed(Key::RSHIFT) || KeyInput::pressed(Key::d)) {
+            torque.x -= Time::delta() * torqueAcc;
+        }
     }
     /*
     if (keyInput.pressed(Key::UP)){

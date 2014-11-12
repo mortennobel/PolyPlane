@@ -41,8 +41,8 @@ int main(int argc, char * argv[])
 
     auto skybox = camera->gameObject()->addComponent<Skybox>();
     Material *mat = new Material();
-    mat->setShader(Project::loadShader("shaders/skybox.shader"));
-    mat->setUniform("mainTexture", Project::loadTexture2D("shaders/skybox.png"));
+    mat->setShader(Project::loadShader("poly-assets/shaders/skybox.shader"));
+    mat->setUniform("mainTexture", Project::loadTexture2D("poly-assets/textures/skybox.png"));
     skybox->setMaterial(mat);
     Engine::startMainLoop();
 

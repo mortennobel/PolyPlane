@@ -13,11 +13,11 @@ using namespace kick;
 Exhaustion::Exhaustion(kick::GameObject *gameObject) : Component(gameObject) {
     MeshRenderer* mr = gameObject->addComponent<MeshRenderer>();
     Material *material = new Material();
-    material->setShader(Project::loadShader("shaders/unlit_vertex_colored.shader"));
+    material->setShader(Project::loadShader("poly-assets/shaders/unlit_vertex_colored.shader"));
     mr->setMaterial(material);
     Mesh *mesh = new Mesh();
 
-    mesh->setMeshData(loadPlyData("blender-models","cloud.ply"));
+    mesh->setMeshData(loadPlyData("poly-assets/models","cloud.ply"));
     mr->setMesh(mesh);
 }
 

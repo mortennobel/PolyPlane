@@ -121,7 +121,7 @@ void Terrain::addPlant(Transform *parent, vec3 pos){
     MeshRenderer* meshRenderer = gameObject->addComponent<MeshRenderer>();
     meshRenderer->setMesh(plantMesh);
     Material *material = new Material();
-    material->setShader(Project::loadShader("shaders/diffuse_vertex_colored.shader"));
+    material->setShader(Project::loadShader("poly-assets/shaders/diffuse_vertex_colored.shader"));
     meshRenderer->setMaterial(material);
 
     vec3 finalPos = (vec3)(parent->globalMatrix()*vec4(pos,1.0f));
@@ -131,7 +131,7 @@ void Terrain::addPlant(Transform *parent, vec3 pos){
 }
 
 void Terrain::addCloud(vec3 pos, vec3 min, vec3 max){
-    static MeshData* cloudMesh = loadPlyData("blender-models","cloud.ply");
+    static MeshData* cloudMesh = loadPlyData("poly-assets/models","cloud.ply");
     static Mesh *mesh = new Mesh();
     mesh->setMeshData(cloudMesh);
 
@@ -140,7 +140,7 @@ void Terrain::addCloud(vec3 pos, vec3 min, vec3 max){
     MeshRenderer* meshRenderer = gameObject->addComponent<MeshRenderer>();
     meshRenderer->setMesh(mesh);
     Material *material = new Material();
-    material->setShader(Project::loadShader("shaders/unlit_vertex_colored.shader"));
+    material->setShader(Project::loadShader("poly-assets/shaders/unlit_vertex_colored.shader"));
     meshRenderer->setMaterial(material);
 
 
@@ -154,7 +154,7 @@ void Terrain::buildTerrain(vec2 offset, Mesh *mesh, vec3 min, vec3 max){
     MeshRenderer* meshRenderer = gameObject->addComponent<MeshRenderer>();
     meshRenderer->setMesh(mesh);
     Material *material = new Material();
-    material->setShader(Project::loadShader("shaders/unlit_vertex_colored.shader"));
+    material->setShader(Project::loadShader("poly-assets/shaders/unlit_vertex_colored.shader"));
     meshRenderer->setMaterial(material);
 
     gameObject->transform()->setPosition(vec3{offset.x*200*worldScale, 0, offset.y*200*worldScale});
@@ -212,13 +212,13 @@ Terrain::Terrain(kick::GameObject *gameObject)
                 break;
 
         }
-        mesh->setMeshData(AddNoise(loadPlyData("blender-models",name+".ply")));
+        mesh->setMeshData(AddNoise(loadPlyData("poly-assets/models",name+".ply")));
         plants.push_back(mesh);
     }
 
 
     Mesh *mesh = new Mesh();
-    mesh->setMeshData(colorTerrain(loadPlyData("blender-models","terrain.ply")));
+    mesh->setMeshData(colorTerrain(loadPlyData("poly-assets/models","terrain.ply")));
 
     vec3 min {200*-2.5f*worldScale};
     vec3 max {200*2.5f*worldScale};

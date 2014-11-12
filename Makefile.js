@@ -4,7 +4,7 @@
 // node make.js [-f FILE, --file=FILE, --makefile=FILE] [target]
 //
 
-var target = "DEBUG";
+var target = "Release";//"DEBUG";
 
 for (var i=2;i<process.argv.length;i++){
     if (process.argv[i].indexOf('-')===0){
@@ -18,15 +18,15 @@ var project = {
     "options": [(target=="debug"?"-O0":"-O3"), "-Werror"/*, "-s USE_SDL=2"*/],
     "buildoptions": ["-std=c++11", "-stdlib=libc++", "-fno-exceptions"],
     "defines": ["GLM_FORCE_RADIANS",(target=="debug"?"DEBUG":"NDEBUG")],
-    "targetdir": "../build-emscripten",
+    "targetdir": "../PolyPlane-pages",
     "target": "index.html",
-    "includedirs": [ "../kick/src", "../kick/libs/include" ,"./PolyPlane"],
+    "includedirs": [ "../kick/src", "../kick/libs/include" ,"./src"],
 	"files":[ {
             "root":"../kick/",
             "filter":"src/.*\\.cpp"
         },
         {
-            "root":"./PolyPlane/",
+            "root":"./src/",
             "filter":".*.cpp"}],
     "embed":[
 	{
@@ -35,7 +35,7 @@ var project = {
 	},
         {
             "root":".",
-            "filter":"blender-models/.*ply"
+            "filter":"poly-assets/models/.*ply"
         },
         {
             "root":"../kick/",
@@ -46,12 +46,12 @@ var project = {
             "filter":"assets/ui/.*\\.txt"
         },
         {
-            "root":"./PolyPlane/",
-            "filter":"shaders/.*glsl"
+            "root":".",
+            "filter":"poly-assets/shaders/.*glsl"
         },
         {
-            "root":"./PolyPlane/",
-            "filter":"shaders/.*shader"
+            "root":".",
+            "filter":"poly-assets/shaders/.*shader"
         }],
     "preload":[
         {
@@ -71,8 +71,8 @@ var project = {
             "filter":"assets/ui/.*\\.png"
         },
         {
-            "root":"./PolyPlane/",
-            "filter":"shaders/.*\\.png"
+            "root":".",
+            "filter":"poly-assets/textures/.*\\.png"
         }
     ]
 };
