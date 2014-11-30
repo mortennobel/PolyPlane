@@ -149,7 +149,7 @@ void Terrain::addCloud(vec3 pos, vec3 min, vec3 max){
     gameObject->transform()->setLocalRotationEuler(vec3(0,(float)linearRand(-M_PI,M_PI),0));
 }
 
-void Terrain::buildTerrain(vec2 offset, Mesh *mesh, vec3 min, vec3 max){
+void Terrain::buildTerrain(vec2 offset, Mesh *mesh, MeshData* meshData, vec3 min, vec3 max){
     auto gameObject = Engine::activeScene()->createGameObject("Terrain");
     MeshRenderer* meshRenderer = gameObject->addComponent<MeshRenderer>();
     meshRenderer->setMesh(mesh);
@@ -161,8 +161,8 @@ void Terrain::buildTerrain(vec2 offset, Mesh *mesh, vec3 min, vec3 max){
     gameObject->transform()->setLocalScale(vec3{worldScale, 1, worldScale});
     gameObject->transform()->setLocalRotationEuler(vec3{0,M_PI*(offset.x+offset.y),0});
 
-    auto& indices = mesh->meshData()->submeshIndices(0);
-    auto& pos = mesh->meshData()->position();
+    auto& indices = meshData->submeshIndices(0);
+    auto& pos = meshData->position();
     for (int i=0;i<190;i++){
         // find random triangle
         int index = (int)linearRand(0.0f, indices.size()/3-1.0f)*3;
@@ -218,13 +218,14 @@ Terrain::Terrain(kick::GameObject *gameObject)
 
 
     Mesh *mesh = new Mesh();
-    mesh->setMeshData(colorTerrain(loadPlyData("poly-assets/models","terrain.ply")));
+    MeshData* meshData = colorTerrain(loadPlyData("poly-assets/models","terrain.ply"));
+    mesh->setMeshData(meshData);
 
     vec3 min {200*-2.5f*worldScale};
     vec3 max {200*2.5f*worldScale};
     for (int x=-2;x<=2;x++){
         for (int y=-2;y<=2;y++) {
-            buildTerrain(vec2{x,y}, mesh, min, max);
+            buildTerrain(vec2{x,y}, mesh, meshData, min, max);
         }
     }
 }

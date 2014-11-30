@@ -14,7 +14,7 @@ class Terrain : public kick::Component {
     std::vector<kick::Mesh*> plants;
 public:
     Terrain(kick::GameObject *gameObject);
-    void buildTerrain(glm::vec2 offset, kick::Mesh *mesh, glm::vec3 min, glm::vec3 max);
+    void buildTerrain(glm::vec2 offset, kick::Mesh *mesh, kick::MeshData* meshData, glm::vec3 min, glm::vec3 max);
 
     void addPlant(kick::Transform *parent, glm::vec3 pos);
 
